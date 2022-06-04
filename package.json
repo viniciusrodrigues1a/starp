@@ -1,0 +1,33 @@
+{
+  "name": "starp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "scripts": {
+    "start": "",
+    "dev": "",
+    "prepare": "husky install",
+    "test:unit": "yarn cross-env NODE_ENV=test jest --config ./jest.config.js --passWithNoTests",
+    "test:integration": "yarn cross-env NODE_ENV=test jest --config ./tests/jest.config.js --passWithNoTests"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.27.0",
+    "@typescript-eslint/parser": "^5.27.0",
+    "cross-env": "^7.0.3",
+    "eslint": ">=5.16.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^26.4.6",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.1",
+    "jest": "^28.1.0",
+    "lint-staged": "^13.0.0",
+    "prettier": "^2.6.2",
+    "ts-jest": "^28.0.4",
+    "typescript": "^4.7.3"
+  }
+}

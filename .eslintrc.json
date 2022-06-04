@@ -1,0 +1,30 @@
+{
+  "env": {
+    "es2021": true,
+    "node": true,
+    "jest/globals": true
+  },
+  "extends": ["google", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "prettier", "jest"],
+  "rules": {
+    "prettier/prettier": "error",
+    "no-plusplus": "off",
+    "require-jsdoc": "off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ]
+  }
+}
