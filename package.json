@@ -11,7 +11,7 @@
     "dev": "",
     "prepare": "husky install",
     "test:unit": "yarn cross-env NODE_ENV=test jest --config ./jest.config.js --passWithNoTests",
-    "test:integration": "yarn cross-env NODE_ENV=test jest --config ./tests/jest.config.js --passWithNoTests"
+    "test:integration": "yarn cross-env NODE_ENV=test jest --config ./tests/jest.config.js --passWithNoTests --runInBand"
   },
   "devDependencies": {
     "@types/jest": "^28.1.0",
