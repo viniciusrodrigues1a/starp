@@ -19,9 +19,10 @@ export class Podcast {
     file: Buffer,
     lengthInMilliseconds: number,
     title: string,
-    artist: string
+    artist: string,
+    id: string | null = null
   ) {
-    this.id = crypto.randomUUID();
+    this.id = id || crypto.randomUUID();
     this.file = file;
     this.setLengthInMilliseconds(lengthInMilliseconds);
     this.setTitle(title);
