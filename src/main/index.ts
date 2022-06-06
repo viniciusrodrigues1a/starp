@@ -1,30 +1,19 @@
+import { connection } from "@/shared/infrastructure/database/connection";
 import { logger } from "./logger";
+import { Server } from "./Server";
 
 enum ExitStatus {
   Failure = 1,
   Success = 0,
 }
 
-function exitWithError(error: Error) {
-  logger.debug(`App exited with error: ${error.message}`);
-  logger.waitOnFinish(() => process.exit(ExitStatus.Failure));
-}
-
 function handleSignal(sig: string, closeOpenHandles: () => Promise<void>) {
-  const forcedTimeout = 10 * 1000; // 10 seconds
-
   return process.on(sig, async () => {
     try {
-      logger.debug("Gracefully shutting down");
-
-      setTimeout(() => {
-        logger.debug(
-          "Couldn't close open handles in time, forcefully shutting down..."
-        );
-        process.exit(ExitStatus.Failure);
-      }, forcedTimeout);
+      logger.verbose("Gracefully shutting down");
 
       await closeOpenHandles();
+      exit(ExitStatus.Success);
     } catch (error) {
       if (!(error instanceof Error)) throw error;
 
@@ -33,13 +22,24 @@ function handleSignal(sig: string, closeOpenHandles: () => Promise<void>) {
   });
 }
 
+function exitWithError(error: Error) {
+  logger.debug(`App exited with error: ${error.message}`);
+  exit(ExitStatus.Failure);
+}
+
+function exit(status: number) {
+  logger.waitOnFinish(() => process.exit(status));
+}
+
 try {
-  console.log("App is running!"); // TODO
+  const server = new Server();
+  server.start();
 
   const exitSignals: NodeJS.Signals[] = ["SIGINT", "SIGTERM", "SIGQUIT"];
   exitSignals.forEach((sig) => {
     handleSignal(sig, async () => {
-      console.log("Closing open handles"); // TODO
+      server.stop();
+      await connection.$disconnect();
     });
   });
 } catch (error: unknown) {
