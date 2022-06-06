@@ -10,6 +10,7 @@
     "start": "yarn build && node ./dist/main/index.js",
     "build": "yarn tsc --build",
     "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules,coverage,dist src/main/index.ts",
+    "migrate": "yarn prisma migrate dev",
     "prepare": "husky install",
     "test:unit": "yarn cross-env NODE_ENV=test jest --config ./jest.config.js --passWithNoTests",
     "test:integration": "yarn cross-env NODE_ENV=test jest --config ./tests/jest.config.js --passWithNoTests --runInBand"
