@@ -1,4 +1,4 @@
-import { ControllerResponse, Link } from "../../../shared/controllers";
+import { ControllerResponse, Link } from "@/shared/controllers";
 import {
   FindAllPodcastsRepositoryDTO,
   IFindAllPodcastsRepository,
