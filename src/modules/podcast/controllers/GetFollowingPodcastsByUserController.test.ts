@@ -1,27 +1,27 @@
 import { mock } from "jest-mock-extended";
 import { GetFollowingPodcastsByUserController } from "./GetFollowingPodcastsByUserController";
 import {
-  FindFollowingPodcastsByUserRepositoryDTO,
-  IFindFollowingPodcastsByUserRepository,
+  FindAllFollowingPodcastsByUserRepositoryDTO,
+  IFindAllFollowingPodcastsByUserRepository,
 } from "./interfaces/repositories";
 
 function makeSUT() {
-  const findFollowingPodcastsByUserRepositoryMock =
-    mock<IFindFollowingPodcastsByUserRepository>();
+  const findAllFollowingPodcastsByUserRepositoryMock =
+    mock<IFindAllFollowingPodcastsByUserRepository>();
   const sut = new GetFollowingPodcastsByUserController(
-    findFollowingPodcastsByUserRepositoryMock
+    findAllFollowingPodcastsByUserRepositoryMock
   );
 
   return {
     sut,
-    findFollowingPodcastsByUserRepositoryMock,
+    findAllFollowingPodcastsByUserRepositoryMock,
   };
 }
 
 describe("GetFollowingPodcastsByUserController", () => {
-  it("should call FindFollowingPodcastsByUserRepository.findFollowingPodcasts once and with userId", async () => {
-    const { sut, findFollowingPodcastsByUserRepositoryMock } = makeSUT();
-    findFollowingPodcastsByUserRepositoryMock.findFollowingPodcasts.mockResolvedValueOnce(
+  it("should call FindAllFollowingPodcastsByUserRepository.findAllFollowingPodcasts once and with userId", async () => {
+    const { sut, findAllFollowingPodcastsByUserRepositoryMock } = makeSUT();
+    findAllFollowingPodcastsByUserRepositoryMock.findAllFollowingPodcasts.mockResolvedValueOnce(
       []
     );
 
@@ -30,16 +30,16 @@ describe("GetFollowingPodcastsByUserController", () => {
     await sut.execute({ userId: mockUserId });
 
     expect(
-      findFollowingPodcastsByUserRepositoryMock.findFollowingPodcasts
+      findAllFollowingPodcastsByUserRepositoryMock.findAllFollowingPodcasts
     ).toHaveBeenCalledTimes(1);
     expect(
-      findFollowingPodcastsByUserRepositoryMock.findFollowingPodcasts
+      findAllFollowingPodcastsByUserRepositoryMock.findAllFollowingPodcasts
     ).toHaveBeenCalledWith(mockUserId);
   });
 
   it("should return following podcasts", async () => {
-    const { sut, findFollowingPodcastsByUserRepositoryMock } = makeSUT();
-    const podcasts: FindFollowingPodcastsByUserRepositoryDTO.Response =
+    const { sut, findAllFollowingPodcastsByUserRepositoryMock } = makeSUT();
+    const podcasts: FindAllFollowingPodcastsByUserRepositoryDTO.Response =
       new Array(30).fill(0).map((_, index) => ({
         id: `podcast-id-${index}`,
         title: `My podcast #${index}`,
@@ -47,7 +47,7 @@ describe("GetFollowingPodcastsByUserController", () => {
         image: null,
         lengthInMilliseconds: 1100,
       }));
-    findFollowingPodcastsByUserRepositoryMock.findFollowingPodcasts.mockResolvedValueOnce(
+    findAllFollowingPodcastsByUserRepositoryMock.findAllFollowingPodcasts.mockResolvedValueOnce(
       podcasts
     );
     const mockUserId = "QUQUSJ23782";

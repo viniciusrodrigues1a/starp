@@ -5,12 +5,12 @@ import {
 } from "./interfaces/repositories";
 export class GetRecentlyListedPodcastsController {
   constructor(
-    private readonly getRecentlyListenedPodcastsRepository: IFindAllPodcastsRecentlyListenedRepository
+    private readonly findAllRecentlyListenedPodcastsRepository: IFindAllPodcastsRecentlyListenedRepository
   ) {}
 
   async execute(): ControllerResponse<FindAllPodcastsRecentlyListenedRepositoryDTO.Response> {
     const podcasts =
-      await this.getRecentlyListenedPodcastsRepository.findAllPodcastsRecentlyListed();
+      await this.findAllRecentlyListenedPodcastsRepository.findAllPodcastsRecentlyListed();
     const links = this.getLinks(podcasts.map((p) => p.id));
 
     return { content: podcasts, links };

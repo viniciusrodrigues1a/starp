@@ -17,8 +17,6 @@ export class GetMostListenedPodcastsController {
 
     const links = this.getLinks(sortedPodcasts.map((p) => p.id));
 
-    console.log(links);
-
     return { content: sortedPodcasts, links };
   }
 

@@ -1,7 +1,7 @@
 import { ControllerResponse, Link } from "@/shared/controllers";
 import {
-  FindFollowingPodcastsByUserRepositoryDTO,
-  IFindFollowingPodcastsByUserRepository,
+  FindAllFollowingPodcastsByUserRepositoryDTO,
+  IFindAllFollowingPodcastsByUserRepository,
 } from "./interfaces/repositories";
 
 export namespace GetFollowingPodcastsByUserController {
@@ -12,15 +12,17 @@ export namespace GetFollowingPodcastsByUserController {
 
 export class GetFollowingPodcastsByUserController {
   constructor(
-    private readonly getFollowingPodcastsRepository: IFindFollowingPodcastsByUserRepository
+    private readonly findAllFollowingPodcastsRepository: IFindAllFollowingPodcastsByUserRepository
   ) {}
 
   async execute(
     request: GetFollowingPodcastsByUserController.Request
-  ): ControllerResponse<FindFollowingPodcastsByUserRepositoryDTO.Response> {
+  ): ControllerResponse<FindAllFollowingPodcastsByUserRepositoryDTO.Response> {
     const { userId } = request;
     const podcasts =
-      await this.getFollowingPodcastsRepository.findFollowingPodcasts(userId);
+      await this.findAllFollowingPodcastsRepository.findAllFollowingPodcasts(
+        userId
+      );
     const links = this.getLinks(podcasts.map((p) => p.id));
 
     return { content: podcasts, links };
