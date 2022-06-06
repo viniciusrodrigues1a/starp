@@ -1,15 +1,25 @@
 import { Server as HTTPServer } from "http";
 import express, { Express } from "express";
 import { logger } from "./logger";
+import { podcastsRoutes } from "./routes";
+import { errorMiddleware } from "./middlewares";
 
 export class Server {
-  private app: Express = express();
+  public readonly app: Express = express();
   private server: HTTPServer | null = null;
 
-  async start() {
+  start() {
+    this.addMiddlewares();
+
     this.server = this.app.listen(3333, () =>
       logger.verbose("Server is running on port 3333")
     );
+  }
+
+  private addMiddlewares() {
+    this.app.use(express.json());
+    this.app.use("/podcasts", podcastsRoutes);
+    this.app.use(errorMiddleware);
   }
 
   stop() {
