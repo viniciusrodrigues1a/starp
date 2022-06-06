@@ -3,7 +3,8 @@ import {
   FindAllPodcastsRecentlyListenedRepositoryDTO,
   IFindAllPodcastsRecentlyListenedRepository,
 } from "./interfaces/repositories";
-export class GetRecentlyListedPodcastsController {
+
+export class GetRecentlyListenedPodcastsController {
   constructor(
     private readonly findAllRecentlyListenedPodcastsRepository: IFindAllPodcastsRecentlyListenedRepository
   ) {}

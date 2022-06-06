@@ -1,39 +1,39 @@
 import { mock } from "jest-mock-extended";
-import { GetRecentlyListedPodcastsController } from "./GetRecentlyListenedPodcastsController";
+import { GetRecentlyListenedPodcastsController } from "./GetRecentlyListenedPodcastsController";
 import {
   FindAllPodcastsRecentlyListenedRepositoryDTO,
   IFindAllPodcastsRecentlyListenedRepository,
 } from "./interfaces/repositories";
 
 function makeSUT() {
-  const findAllRecentlyListedPodcastsRepositoryMock =
+  const findAllRecentlyListenedPodcastsRepositoryMock =
     mock<IFindAllPodcastsRecentlyListenedRepository>();
-  const sut = new GetRecentlyListedPodcastsController(
-    findAllRecentlyListedPodcastsRepositoryMock
+  const sut = new GetRecentlyListenedPodcastsController(
+    findAllRecentlyListenedPodcastsRepositoryMock
   );
 
   return {
     sut,
-    findAllRecentlyListedPodcastsRepositoryMock,
+    findAllRecentlyListenedPodcastsRepositoryMock,
   };
 }
 
-describe("GetRecentlyListedPodcastsController", () => {
+describe("GetRecentlyListenedPodcastsController", () => {
   it("should call IFindAllPodcastsRepository.findAllPodcasts once", async () => {
-    const { sut, findAllRecentlyListedPodcastsRepositoryMock } = makeSUT();
-    findAllRecentlyListedPodcastsRepositoryMock.findAllPodcastsRecentlyListed.mockResolvedValueOnce(
+    const { sut, findAllRecentlyListenedPodcastsRepositoryMock } = makeSUT();
+    findAllRecentlyListenedPodcastsRepositoryMock.findAllPodcastsRecentlyListed.mockResolvedValueOnce(
       []
     );
 
     await sut.execute();
 
     expect(
-      findAllRecentlyListedPodcastsRepositoryMock.findAllPodcastsRecentlyListed
+      findAllRecentlyListenedPodcastsRepositoryMock.findAllPodcastsRecentlyListed
     ).toHaveBeenCalledTimes(1);
   });
 
   it("should return podcasts recently listed", async () => {
-    const { sut, findAllRecentlyListedPodcastsRepositoryMock } = makeSUT();
+    const { sut, findAllRecentlyListenedPodcastsRepositoryMock } = makeSUT();
     const podcasts: FindAllPodcastsRecentlyListenedRepositoryDTO.Response =
       new Array(30).fill(0).map((_, index) => ({
         id: `podcast-id-${index}`,
@@ -41,7 +41,7 @@ describe("GetRecentlyListedPodcastsController", () => {
         artist: "Artist",
         image: null,
       }));
-    findAllRecentlyListedPodcastsRepositoryMock.findAllPodcastsRecentlyListed.mockResolvedValueOnce(
+    findAllRecentlyListenedPodcastsRepositoryMock.findAllPodcastsRecentlyListed.mockResolvedValueOnce(
       podcasts
     );
 
