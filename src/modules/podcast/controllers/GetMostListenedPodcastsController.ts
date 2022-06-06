@@ -15,24 +15,22 @@ export class GetMostListenedPodcastsController {
       .sort((a, b) => b.timesListened - a.timesListened)
       .slice(0, 20);
 
-    const links = this.getLinks();
+    const links = this.getLinks(sortedPodcasts.map((p) => p.id));
+
+    console.log(links);
 
     return { content: sortedPodcasts, links };
   }
 
-  private getLinks(): Link[] {
+  private getLinks(podcastsIDS: string[]): Link[] {
     const baseURI = `${process.env.BASE_URL}/podcasts`;
-    const recentlyListenedLink: Link = {
-      type: "GET",
-      rel: "podcasts_recently_listened",
-      uri: `${baseURI}/recently-listened`,
-    };
-    const followingLink: Link = {
-      type: "GET",
-      rel: "podcasts_recently_released_by_artists_you_follow",
-      uri: `${baseURI}/following`,
-    };
 
-    return [recentlyListenedLink, followingLink];
+    const podcastsLinks: Link[] = podcastsIDS.map((id) => ({
+      type: "GET",
+      rel: "podcast",
+      uri: `${baseURI}/${id}`,
+    }));
+
+    return podcastsLinks;
   }
 }

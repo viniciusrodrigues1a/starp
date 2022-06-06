@@ -11,24 +11,19 @@ export class GetRecentlyListedPodcastsController {
   async execute(): ControllerResponse<FindAllPodcastsRecentlyListenedRepositoryDTO.Response> {
     const podcasts =
       await this.getRecentlyListenedPodcastsRepository.findAllPodcastsRecentlyListed();
-    const links = this.getLinks();
+    const links = this.getLinks(podcasts.map((p) => p.id));
 
     return { content: podcasts, links };
   }
 
-  private getLinks(): Link[] {
+  private getLinks(podcastsIDS: string[]): Link[] {
     const baseURI = `${process.env.BASE_URL}/podcasts`;
-    const recentlyListenedLink: Link = {
+    const podcastsLinks: Link[] = podcastsIDS.map((id) => ({
       type: "GET",
-      rel: "podcasts_recently_listened",
-      uri: `${baseURI}/recently-listened`,
-    };
-    const followingLink: Link = {
-      type: "GET",
-      rel: "podcasts_recently_released_by_artists_you_follow",
-      uri: `${baseURI}/following`,
-    };
+      rel: "podcast",
+      uri: `${baseURI}/${id}`,
+    }));
 
-    return [recentlyListenedLink, followingLink];
+    return podcastsLinks;
   }
 }
