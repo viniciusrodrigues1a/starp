@@ -41,17 +41,17 @@ function makeLogger(level: string, filename: string): winston.Logger {
 }
 
 const _error = makeLogger("error", "error.log");
-const _info = makeLogger("info", "combined.log");
+const _debug = makeLogger("debug", "combined.log");
 
 export const logger = {
   error: (msg: any) => _error.error(msg),
-  warn: (msg: any) => _info.warn(msg),
-  info: (msg: any) => _info.info(msg),
-  http: (msg: any) => _info.http(msg),
-  verbose: (msg: any) => _info.verbose(msg),
-  debug: (msg: any) => _info.debug(msg),
+  warn: (msg: any) => _debug.warn(msg),
+  info: (msg: any) => _debug.info(msg),
+  http: (msg: any) => _debug.http(msg),
+  verbose: (msg: any) => _debug.verbose(msg),
+  debug: (msg: any) => _debug.debug(msg),
   waitOnFinish: (cb: any) => {
-    _info.on("finish", () => _error.on("finish", cb));
+    _debug.on("finish", () => _error.on("finish", cb));
   },
 };
 
