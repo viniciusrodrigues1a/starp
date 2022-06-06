@@ -1,0 +1,19 @@
+datasource db {
+  url = env("POSTGRES_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Podcast {
+  id String @id @default(uuid())
+  filePath String
+  lengthInMilliseconds Int
+  timesListened Int
+  timesStarred Int
+  title String
+  artist String
+  imagePath String?
+}
