@@ -1,19 +1,52 @@
+import path from "path";
+import fs from "fs";
 import { connection } from "@/shared/infrastructure/database/connection";
 import {
   FindAllFollowingPodcastsByUserRepositoryDTO,
   FindAllPodcastsRecentlyListenedRepositoryDTO,
   FindAllPodcastsRepositoryDTO,
+  GetPodcastAudioStreamRepositoryDTO,
   IFindAllFollowingPodcastsByUserRepository,
   IFindAllPodcastsRecentlyListenedRepository,
   IFindAllPodcastsRepository,
+  IGetPodcastAudioStreamRepository,
 } from "../../controllers/interfaces/repositories";
 
 export class PrismaRepository
   implements
     IFindAllPodcastsRepository,
     IFindAllPodcastsRecentlyListenedRepository,
-    IFindAllFollowingPodcastsByUserRepository
+    IFindAllFollowingPodcastsByUserRepository,
+    IGetPodcastAudioStreamRepository
 {
+  async getStream(
+    DTO: GetPodcastAudioStreamRepositoryDTO.Request
+  ): Promise<GetPodcastAudioStreamRepositoryDTO.Response> {
+    const filePath = path.resolve(
+      __dirname,
+      "..",
+      "..",
+      "..",
+      "..",
+      "..",
+      "uploads",
+      `${DTO.id}.mp3`
+    );
+
+    if (!fs.existsSync(filePath)) {
+      return undefined;
+    }
+
+    const audioSize = fs.statSync(filePath).size;
+
+    const stream = fs.createReadStream(filePath, {
+      start: DTO.start,
+      end: DTO.end,
+    });
+
+    return { stream, audioSize };
+  }
+
   async findAllPodcasts(): Promise<FindAllPodcastsRepositoryDTO.Response> {
     const rows = await connection.podcast.findMany();
 
@@ -34,7 +67,7 @@ export class PrismaRepository
     return this.findAllPodcasts();
   }
 
-  findAllFollowingPodcasts(
+  async findAllFollowingPodcasts(
     userId: string
   ): Promise<FindAllFollowingPodcastsByUserRepositoryDTO.Response> {
     return this.findAllPodcasts();
