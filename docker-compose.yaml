@@ -55,6 +55,7 @@ services:
       - POSTGRES_PORT
       - POSTGRES_DB
       - POSTGRES_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - TEST_POSTGRES_URL=postgres://${TEST_POSTGRES_USER}:${TEST_POSTGRES_PASSWORD}@postgres-test:5432/${TEST_POSTGRES_DB}
     networks:
       - starp
 
