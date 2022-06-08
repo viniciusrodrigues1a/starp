@@ -8,9 +8,12 @@ export class Server {
   public readonly app: Express = express();
   private server: HTTPServer | null = null;
 
-  start() {
+  constructor() {
     this.addMiddlewares();
+    this.addRoutes();
+  }
 
+  start() {
     this.server = this.app.listen(3333, () =>
       logger.verbose("Server is running on port 3333")
     );
@@ -18,8 +21,11 @@ export class Server {
 
   private addMiddlewares() {
     this.app.use(express.json());
-    this.app.use("/podcasts", podcastsRoutes);
     this.app.use(errorMiddleware);
+  }
+
+  private addRoutes() {
+    this.app.use("/podcasts", podcastsRoutes);
   }
 
   stop() {
