@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import mime from "mime";
 import { connection } from "@/shared/infrastructure/database/connection";
 import {
   FindAllFollowingPodcastsByUserRepositoryDTO,
@@ -44,7 +45,9 @@ export class PrismaRepository
       end: DTO.end,
     });
 
-    return { stream, audioSize };
+    const mimeType = mime.getType(path.extname(filePath)) || "audio/*";
+
+    return { stream, audioSize, mimeType };
   }
 
   async findAllPodcasts(): Promise<FindAllPodcastsRepositoryDTO.Response> {

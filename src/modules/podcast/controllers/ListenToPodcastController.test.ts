@@ -23,6 +23,7 @@ describe("ListenToPodcastController", () => {
     getPodcastAudioStreamRepositoryMock.getStream.mockResolvedValueOnce({
       audioSize: 1131,
       stream: {} as fs.ReadStream,
+      mimeType: "audio/mp3",
     });
     const givenRequest: ListenToPodcastController.Request = {
       id: "podcast-id-0",

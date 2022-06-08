@@ -3,6 +3,7 @@ import fs from "fs";
 type AudioStream = {
   audioSize: number;
   stream: fs.ReadStream;
+  mimeType: string;
 };
 
 export namespace GetPodcastAudioStreamRepositoryDTO {
