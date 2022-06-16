@@ -1,5 +1,9 @@
+import fs from "fs";
 import { Router } from "express";
-import { ExpressControllerAdapter } from "../adapters";
+import {
+  ExpressAudioStreamingControllerAdapter,
+  ExpressControllerAdapter,
+} from "../adapters";
 import { prismaControllerFactoryImpl } from "../factories/controllers/PrismaControllerFactoryImpl";
 
 export const podcastsRoutes = Router();
@@ -22,5 +26,12 @@ podcastsRoutes.get(
   "/recently-listened",
   ExpressControllerAdapter(
     prismaControllerFactoryImpl.makeGetRecentlyListenedPodcastsController
+  )
+);
+
+podcastsRoutes.get(
+  "/:id/listen",
+  ExpressAudioStreamingControllerAdapter(
+    prismaControllerFactoryImpl.makeListenToPodcastController
   )
 );

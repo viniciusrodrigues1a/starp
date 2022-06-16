@@ -41,7 +41,7 @@ export class PrismaRepository
     const audioSize = fs.statSync(filePath).size;
 
     const stream = fs.createReadStream(filePath, {
-      start: DTO.start,
+      start: Math.min(DTO.start, audioSize - 1),
       end: DTO.end,
     });
 
