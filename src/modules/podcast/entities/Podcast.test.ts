@@ -18,6 +18,7 @@ describe("Podcast entity", () => {
       title: "MyPodcast",
       artist: "Artist",
       description: mockDescription,
+      createdAt: new Date(),
     });
 
     expect(spy).toHaveBeenCalledTimes(1);
@@ -31,6 +32,7 @@ describe("Podcast entity", () => {
         title: "MyPodcast",
         artist: "Artist",
         description: "",
+        createdAt: new Date(),
       });
 
     expect(when).toThrow(PodcastDescriptionIsInvalidError);
@@ -44,6 +46,7 @@ describe("Podcast entity", () => {
         title: "My podcast",
         artist: "Artist",
         description: mockDescription,
+        createdAt: new Date(),
       });
 
     expect(when).toThrow(PodcastLengthCantBeNegativeError);
@@ -56,6 +59,7 @@ describe("Podcast entity", () => {
       title: "MyPodcast",
       artist: "Artist",
       description: mockDescription,
+      createdAt: new Date(),
     });
 
     const when = () => podcast.setLengthInMilliseconds(-1132);
@@ -71,6 +75,7 @@ describe("Podcast entity", () => {
         title: "abc",
         artist: "Artist",
         description: mockDescription,
+        createdAt: new Date(),
       });
 
     expect(when).toThrow(PodcastTitleIsInvalidError);
@@ -83,6 +88,7 @@ describe("Podcast entity", () => {
       title: "My Podcast",
       artist: "Artist",
       description: mockDescription,
+      createdAt: new Date(),
     });
 
     const when = () => podcast.setTitle("abc");
@@ -98,6 +104,7 @@ describe("Podcast entity", () => {
         title: "MyPodcast",
         artist: "",
         description: mockDescription,
+        createdAt: new Date(),
       });
 
     expect(when).toThrow(PodcastArtistIsInvalidError);
@@ -110,6 +117,7 @@ describe("Podcast entity", () => {
       title: "MyPodcast",
       artist: "Artist",
       description: mockDescription,
+      createdAt: new Date(),
     });
 
     const when = () => podcast.setArtist("");

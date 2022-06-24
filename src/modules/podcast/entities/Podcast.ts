@@ -13,6 +13,7 @@ type PodcastProps = {
   artist: string;
   id?: string;
   description: string;
+  createdAt: Date;
 };
 
 export class Podcast {
@@ -25,6 +26,7 @@ export class Podcast {
   private artist: string;
   private image: string | null;
   private description: string;
+  private createdAt: Date;
 
   constructor({
     artist,
@@ -33,6 +35,7 @@ export class Podcast {
     id,
     lengthInMilliseconds,
     title,
+    createdAt,
   }: PodcastProps) {
     this.id = id || crypto.randomUUID();
     this.file = file;
@@ -43,6 +46,7 @@ export class Podcast {
     this.timesStarred = 0;
     this.image = null;
     this.setDescription(description);
+    this.createdAt = createdAt;
   }
 
   public getID(): string {
