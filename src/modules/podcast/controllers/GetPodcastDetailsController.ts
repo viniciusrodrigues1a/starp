@@ -7,7 +7,7 @@ import {
 
 export namespace GetPodcastDetailsController {
   export type Request = {
-    podcastId: string;
+    id: string;
   };
 }
 
@@ -19,11 +19,9 @@ export class GetPodcastDetailsController {
   async execute(
     request: GetPodcastDetailsController.Request
   ): ControllerResponse<FindPodcastDetailsRepositoryDTO.Response> {
-    const { podcastId } = request;
+    const { id } = request;
 
-    const podcast = await this.findPodcastDetailsRepository.findPodcast(
-      podcastId
-    );
+    const podcast = await this.findPodcastDetailsRepository.findPodcast(id);
     if (!podcast) throw new PodcastCouldntBeFoundError();
 
     return { content: podcast, links: [] };

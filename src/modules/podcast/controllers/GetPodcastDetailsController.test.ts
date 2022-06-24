@@ -37,7 +37,7 @@ describe("GetPodcastDetailsController", () => {
       givenRequest
     );
 
-    await sut.execute({ podcastId: mockPodcastId });
+    await sut.execute({ id: mockPodcastId });
 
     expect(findPodcastDetailsRepositoryMock.findPodcast).toHaveBeenCalledTimes(
       1
@@ -53,7 +53,7 @@ describe("GetPodcastDetailsController", () => {
 
     findPodcastDetailsRepositoryMock.findPodcast.mockResolvedValue(null);
 
-    const when = async () => await sut.execute({ podcastId: mockPodcastId });
+    const when = async () => await sut.execute({ id: mockPodcastId });
 
     await expect(when).rejects.toThrowError(PodcastCouldntBeFoundError);
   });
