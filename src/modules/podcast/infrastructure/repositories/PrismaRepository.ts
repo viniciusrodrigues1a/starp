@@ -1,6 +1,5 @@
 import path from "path";
 import fs from "fs";
-import mime from "mime";
 import { connection } from "@/shared/infrastructure/database/connection";
 import {
   FindAllFollowingPodcastsByUserRepositoryDTO,
@@ -21,7 +20,7 @@ export class PrismaRepository
     IGetPodcastAudioStreamRepository
 {
   async getStream(
-    DTO: GetPodcastAudioStreamRepositoryDTO.Request
+    id: string
   ): Promise<GetPodcastAudioStreamRepositoryDTO.Response> {
     const filePath = path.resolve(
       __dirname,
@@ -31,23 +30,17 @@ export class PrismaRepository
       "..",
       "..",
       "uploads",
-      `${DTO.id}.mp3`
+      id,
+      `index.m3u8`
     );
 
     if (!fs.existsSync(filePath)) {
       return undefined;
     }
 
-    const audioSize = fs.statSync(filePath).size;
+    const buffer = await fs.promises.readFile(filePath);
 
-    const stream = fs.createReadStream(filePath, {
-      start: Math.min(DTO.start, audioSize - 1),
-      end: DTO.end,
-    });
-
-    const mimeType = mime.getType(path.extname(filePath)) || "audio/*";
-
-    return { stream, audioSize, mimeType };
+    return buffer;
   }
 
   async findAllPodcasts(): Promise<FindAllPodcastsRepositoryDTO.Response> {
