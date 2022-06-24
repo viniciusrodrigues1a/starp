@@ -14,13 +14,15 @@ export class Podcast {
   private title: string;
   private artist: string;
   private image: string | null;
+  private description: string;
 
   constructor(
     file: Buffer,
     lengthInMilliseconds: number,
     title: string,
     artist: string,
-    id: string | null = null
+    id: string | null = null,
+    description: string
   ) {
     this.id = id || crypto.randomUUID();
     this.file = file;
@@ -30,6 +32,7 @@ export class Podcast {
     this.timesListened = 0;
     this.timesStarred = 0;
     this.image = null;
+    this.description = description;
   }
 
   public getID(): string {
