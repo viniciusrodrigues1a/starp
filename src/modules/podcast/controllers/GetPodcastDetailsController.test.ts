@@ -25,7 +25,7 @@ describe("GetPodcastDetailsController", () => {
     const givenRequest: FindPodcastDetailsRepositoryDTO.Response = {
       id: "podcast-id-0",
       artist: "Artist",
-      date: new Date().toString(),
+      date: new Date(),
       description: "Description ",
       image: "",
       lengthInMilliseconds: 2345,
@@ -51,7 +51,7 @@ describe("GetPodcastDetailsController", () => {
     const { sut, findPodcastDetailsRepositoryMock } = makeSUT();
     const mockPodcastId = "AH2234BBKD";
 
-    findPodcastDetailsRepositoryMock.findPodcast.mockResolvedValue(undefined);
+    findPodcastDetailsRepositoryMock.findPodcast.mockResolvedValue(null);
 
     const when = async () => await sut.execute({ podcastId: mockPodcastId });
 
