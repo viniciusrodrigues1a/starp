@@ -30,7 +30,7 @@ podcastsRoutes.get(
 );
 
 podcastsRoutes.get(
-  "/:id/listen",
+  "/:id/listen/:segment",
   ExpressAudioStreamingControllerAdapter(
     prismaControllerFactoryImpl.makeListenToPodcastController
   )

@@ -8,8 +8,7 @@ import {
 export namespace ListenToPodcastController {
   export type Request = {
     id: string;
-    start: number;
-    end: number;
+    segment: string;
   };
 }
 
@@ -22,7 +21,8 @@ export class ListenToPodcastController {
     request: ListenToPodcastController.Request
   ): ControllerResponse<GetPodcastAudioStreamRepositoryDTO.Response> {
     const stream = await this.getPodcastAudioStreamRepository.getStream(
-      request
+      request.id,
+      request.segment
     );
 
     if (!stream) throw new AudioStreamCouldntBeFoundError();
