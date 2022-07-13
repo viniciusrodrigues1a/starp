@@ -11,6 +11,7 @@ export class Server {
   constructor() {
     this.addMiddlewares();
     this.addRoutes();
+    this.addErrorMiddeware();
   }
 
   start() {
@@ -21,6 +22,9 @@ export class Server {
 
   private addMiddlewares() {
     this.app.use(express.json());
+  }
+
+  private addErrorMiddeware() {
     this.app.use(errorMiddleware);
   }
 

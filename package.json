@@ -13,7 +13,9 @@
     "migrate": "yarn prisma migrate dev",
     "prepare": "husky install",
     "test:unit": "yarn cross-env NODE_ENV=test jest --config ./jest.config.js --passWithNoTests",
-    "test:integration": "docker-compose up -d && yarn migrate && yarn cross-env NODE_ENV=test jest --config ./tests/jest.config.js --passWithNoTests --runInBand"
+    "test:integration": "docker compose up -d && yarn migrate && yarn cross-env NODE_ENV=test jest --config ./tests/jest.config.js --passWithNoTests --runInBand",
+    "seeds:run": "cross-env NODE_ENV=test ts-node ./src/shared/infrastructure/database/add-seeds.ts",
+    "seeds:drop": "cross-env NODE_ENV=test ts-node ./src/shared/infrastructure/database/drop-seeds.ts"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
