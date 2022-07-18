@@ -3,11 +3,15 @@ import {
   IFindAllPodcastsRecentlyListenedRepository,
   IFindAllFollowingPodcastsByUserRepository,
   IGetPodcastAudioStreamRepository,
+  IFindPodcastDetailsRepository,
 } from "@/modules/podcast/controllers/interfaces/repositories";
 import { PrismaRepository } from "@/modules/podcast/infrastructure/repositories";
 import { IRepositoryFactory } from "./IRepositoryFactory";
 
 class PrismaRepositoryFactoryImpl implements IRepositoryFactory {
+  makeGetPodcastDetailsRepository(): IFindPodcastDetailsRepository {
+    return this.makePrismaRepository();
+  }
   makeGetPodcastAudioStreamRepository(): IGetPodcastAudioStreamRepository {
     return this.makePrismaRepository();
   }

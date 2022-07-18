@@ -4,6 +4,17 @@ import {
   PodcastLengthCantBeNegativeError,
   PodcastTitleIsInvalidError,
 } from "./errors";
+import { PodcastDescriptionIsInvalidError } from "./errors/PodcastDescriptionIsInvalidError";
+
+type PodcastProps = {
+  file: Buffer;
+  lengthInMilliseconds: number;
+  title: string;
+  artist: string;
+  id?: string;
+  description: string;
+  createdAt: Date;
+};
 
 export class Podcast {
   private id: string;
@@ -14,14 +25,18 @@ export class Podcast {
   private title: string;
   private artist: string;
   private image: string | null;
+  private description: string;
+  private createdAt: Date;
 
-  constructor(
-    file: Buffer,
-    lengthInMilliseconds: number,
-    title: string,
-    artist: string,
-    id: string | null = null
-  ) {
+  constructor({
+    artist,
+    description,
+    file,
+    id,
+    lengthInMilliseconds,
+    title,
+    createdAt,
+  }: PodcastProps) {
     this.id = id || crypto.randomUUID();
     this.file = file;
     this.setLengthInMilliseconds(lengthInMilliseconds);
@@ -30,6 +45,8 @@ export class Podcast {
     this.timesListened = 0;
     this.timesStarred = 0;
     this.image = null;
+    this.setDescription(description);
+    this.createdAt = createdAt;
   }
 
   public getID(): string {
@@ -93,5 +110,12 @@ export class Podcast {
 
   public setImage(image: string | null) {
     this.image = image;
+  }
+
+  public setDescription(description: string | null) {
+    if (!description || description.length === 0)
+      throw new PodcastDescriptionIsInvalidError();
+
+    this.description = description!;
   }
 }

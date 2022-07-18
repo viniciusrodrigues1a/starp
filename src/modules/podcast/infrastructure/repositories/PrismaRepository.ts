@@ -5,10 +5,12 @@ import {
   FindAllFollowingPodcastsByUserRepositoryDTO,
   FindAllPodcastsRecentlyListenedRepositoryDTO,
   FindAllPodcastsRepositoryDTO,
+  FindPodcastDetailsRepositoryDTO,
   GetPodcastAudioStreamRepositoryDTO,
   IFindAllFollowingPodcastsByUserRepository,
   IFindAllPodcastsRecentlyListenedRepository,
   IFindAllPodcastsRepository,
+  IFindPodcastDetailsRepository,
   IGetPodcastAudioStreamRepository,
 } from "../../controllers/interfaces/repositories";
 
@@ -17,8 +19,25 @@ export class PrismaRepository
     IFindAllPodcastsRepository,
     IFindAllPodcastsRecentlyListenedRepository,
     IFindAllFollowingPodcastsByUserRepository,
-    IGetPodcastAudioStreamRepository
+    IGetPodcastAudioStreamRepository,
+    IFindPodcastDetailsRepository
 {
+  async findPodcast(
+    podcastId: string
+  ): Promise<FindPodcastDetailsRepositoryDTO.Response> {
+    const podcast = await connection.podcast.findUnique({
+      where: { id: podcastId },
+    });
+    if (podcast) {
+      return {
+        ...podcast!,
+        image: podcast.imagePath,
+        date: podcast.createdAt,
+      };
+    }
+    return podcast;
+  }
+
   async getStream(
     id: string,
     segment: string

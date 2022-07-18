@@ -1,3 +1,4 @@
+import { PodcastCouldntBeFoundError } from "@/modules/podcast/controllers/errors/PodcastCouldntBeFoundError";
 import {
   PodcastArtistIsInvalidError,
   PodcastLengthCantBeNegativeError,
@@ -19,6 +20,10 @@ export function errorMiddleware(
     err instanceof PodcastLengthCantBeNegativeError
   ) {
     statusCode = 400;
+  }
+
+  if (err instanceof PodcastCouldntBeFoundError) {
+    statusCode = 404;
   }
 
   res.status(statusCode).json({ error: err.message });

@@ -3,6 +3,7 @@ import {
   GetFollowingPodcastsByUserController,
   GetRecentlyListenedPodcastsController,
   ListenToPodcastController,
+  GetPodcastDetailsController,
 } from "@/modules/podcast/controllers";
 import { prismaRepositoryFactoryImpl } from "../repositories";
 import { IControllerFactory } from "./IControllerFactory";
@@ -29,6 +30,12 @@ class PrismaControllerFactoryImpl implements IControllerFactory {
   makeGetRecentlyListenedPodcastsController(): GetRecentlyListenedPodcastsController {
     return new GetRecentlyListenedPodcastsController(
       prismaRepositoryFactoryImpl.makeFindAllPodcastsRecentlyListenedRepository()
+    );
+  }
+
+  makeGetPodcastDetailsController(): GetPodcastDetailsController {
+    return new GetPodcastDetailsController(
+      prismaRepositoryFactoryImpl.makeGetPodcastDetailsRepository()
     );
   }
 }

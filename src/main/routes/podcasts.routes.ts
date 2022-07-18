@@ -35,3 +35,10 @@ podcastsRoutes.get(
     prismaControllerFactoryImpl.makeListenToPodcastController
   )
 );
+
+podcastsRoutes.get(
+  "/:id/details",
+  ExpressControllerAdapter(
+    prismaControllerFactoryImpl.makeGetPodcastDetailsController
+  )
+);

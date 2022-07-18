@@ -18,4 +18,6 @@ model Podcast {
   title String
   artist String
   imagePath String?
+  description String
+  createdAt DateTime @default(now())
 }
